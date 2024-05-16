@@ -1,0 +1,5 @@
+add_executable(${PROJECT_NAME} main.cpp
+        ../boost/lexical_cast.hpp)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE lr1_lib)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
