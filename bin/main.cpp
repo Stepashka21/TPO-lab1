@@ -1,7 +1,7 @@
 #include <iostream>
 #include "vector"
 #include "../tests/FileWriter.h"
-#include "lib/lr1.h"
+#include "../lib/lr1.h"
 #include <cstdlib>
 
 using namespace std;

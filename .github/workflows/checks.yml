@@ -14,19 +14,30 @@ jobs:
             name: "Windows/Static/X64/Release",
             os: windows-2019,
             config: Release,
-            args: -G Ninja,
+            generator: "Ninja",
           }
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up CMake
         uses: actions/setup-cmake@v1
         with:
-          cmake-version: '3.28'
+          cmake-version: '3.21'
 
-      - name: Configure CMake
-        run: cmake -B build
+      - name: Set up Ninja
+        uses: actions/setup-ninja@v1
+
+      - name: Create Work Dir
+        run: mkdir build
+
+      - name: Configure
+        working-directory: ./build
+        run: cmake .. -G "${{ matrix.config.generator }}" -DCMAKE_BUILD_TYPE=${{ matrix.config.config }}
 
       - name: Build
-        run: cmake --build build --config Released
+        working-directory: ./build
+        run: cmake --build . --config ${{ matrix.config.config }} -j
+
+      - name: Test
+        working-directory: ./build
+        run: ctest -C ${{ matrix.config.config }} -j

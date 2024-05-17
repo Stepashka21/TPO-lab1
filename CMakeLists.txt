@@ -1,14 +1,18 @@
-# Версия cmake
-cmake_minimum_required(VERSION 3.26)
-# Имя проекта
-project(TPO-lab1)
+cmake_minimum_required(VERSION 3.10)
+project(TPO_lab1)
 
-# Версия С++
-set(CMAKE_CXX_STANDARD 17)
+# Указание исполняемого файла и исходных файлов
+add_executable(${PROJECT_NAME} bin/main.cpp)
 
-# Добавление в проект lib, bin
-add_subdirectory(lib)
-add_subdirectory(bin)
+# Добавление библиотеки lr1_lib
+add_library(lr1_lib lib/lr1.cpp)
 
-enable_testing()
-add_subdirectory(tests)
+# Привязка библиотеки lr1_lib к исполняемому файлу
+target_link_libraries(${PROJECT_NAME} PUBLIC lr1_lib)
+
+# Указание директорий для включаемых файлов
+target_include_directories(${PROJECT_NAME} PUBLIC
+        ${PROJECT_SOURCE_DIR}/lib
+        ${PROJECT_SOURCE_DIR}/nlohmann
+        ${PROJECT_SOURCE_DIR}/boost # Предполагается, что заголовочные файлы находятся здесь
+)
